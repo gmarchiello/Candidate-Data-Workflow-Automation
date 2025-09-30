@@ -2,8 +2,8 @@ import os, re, sys
 import pandas as pd
 from datetime import datetime
 from pytz import timezone
-from pdfrw import PdfReader, PdfWriter, PdfName, PdfObject
-from config import (EXCEL_PATH, PDF_TEMPLATE, CONFIG, CHECKBOX_MAP, TEXT_MAP)
+from pdfrw import PdfReader
+from config import CONFIG, CHECKBOX_MAP, TEXT_MAP, EXCEL_PATH, PDF_PATH, OUTPUT_DIR
 from utils import safe_get, make_output_folder, clean_filename, get_checked_fields
 from pdf_filler import fill_pdf
 
@@ -15,17 +15,20 @@ italy_tz = timezone("Europe/Rome")
 try:
     # Check if Excel and PDF files exist, raise error if missing
     missing_files = []
-    if not os.path.exists(EXCEL_PATH):
-        missing_files.append(EXCEL_PATH)
-    if not os.path.exists(PDF_TEMPLATE):
-        missing_files.append(PDF_TEMPLATE)
+    if not EXCEL_PATH.exists():
+        missing_files.append(str(EXCEL_PATH))
+    if not PDF_PATH.exists():
+        missing_files.append(str(PDF_PATH))
     if missing_files:
         file_word = "file is" if len(missing_files) == 1 else "files are"
-        raise FileNotFoundError(f"The following required {file_word} missing: \n - {'\n - '.join(missing_files)}")
+        raise FileNotFoundError(
+        f"The following required {file_word} missing:\n - " + 
+        "\n - ".join(str(f) for f in missing_files)
+        )
     print("✅ All required files are present.")
 
     # Load Excel data and normalize column headers
-    df = pd.read_excel(EXCEL_PATH)
+    df = pd.read_excel(str(EXCEL_PATH), sheet_name = "PYTHON")
     df.columns = df.columns.str.strip()
     if df.columns.isnull().any() or (df.columns == "").any():
         raise ValueError("Excel contains empty or invalid column headers.")
@@ -34,10 +37,10 @@ try:
     print(f"✅ Column headers normalized and valid: {list(df.columns)}")
 
     # Load PDF template and validate existence of form fields
-    pdf_template = PdfReader(PDF_TEMPLATE)
+    pdf_template = PdfReader(str(PDF_PATH))
     if not pdf_template.Root.AcroForm or not getattr(pdf_template.Root.AcroForm, "Fields", None):
         raise ValueError("PDF template does not contain form fields.")
-    print(f"✅ PDF template loaded successfully: {PDF_TEMPLATE}")
+    print(f"✅ PDF template loaded successfully: {PDF_PATH}")
 
     # Collect all available PDF field names for validation
     pdf_fields = set()
@@ -91,10 +94,8 @@ except Exception as e:
 
 
 # --- OUTPUT FOLDER ---
-# Create timestamped output directory for generated PDFs
-BASE_OUTPUT_DIR = "/Users/g/Documents/Data_change_portfolio/output"
-OUTPUT_FOLDER = make_output_folder(BASE_OUTPUT_DIR)
-print(f"✅ Output folder created: {OUTPUT_FOLDER}")
+# Create timestamped output directory for generated PDFs"
+OUTPUT_FOLDER = make_output_folder(str(OUTPUT_DIR))  # should return Path
 
 
 # --- PROCESS EXCEL ROWS AND GENERATE FILLED PDFS ---
@@ -127,7 +128,7 @@ for idx, row in df.iterrows():
     name = safe_get(row.get("Name"), for_pdf_field=False)
     surname = safe_get(row.get("Surname"), for_pdf_field=False)
     safe_name = clean_filename(name, surname, suffix_list)
-    output_pdf_path = os.path.join(OUTPUT_FOLDER, f"{safe_name}.pdf")
+    output_pdf_path = OUTPUT_FOLDER / f"{safe_name}.pdf"
 
     # Prepare text values for PDF fields
     text_values = {}
@@ -156,7 +157,7 @@ for idx, row in df.iterrows():
 
     # Fill PDF with data and handle row-specific errors gracefully
     try:
-        fill_pdf(PDF_TEMPLATE, output_pdf_path, text_values, checkboxes_to_check)
+        fill_pdf(str(PDF_PATH), str(output_pdf_path), text_values, checkboxes_to_check)
     except Exception as e:
         print(f"❌ Error processing row {idx}: {e}")
         continue
@@ -165,7 +166,7 @@ for idx, row in df.iterrows():
     if missing_fields and missing_checkbox:
         print(f"⚠️ Row {idx} missing text value: {', '.join(missing_fields)}")
         print(f"❗ Row {idx} has no checkboxes selected")
-        print(f"🟡 Row {idx} processed: {os.path.basename(output_pdf_path)}")
+        print(f"🟡 Row {idx} processed: {output_pdf_path.name}")
     elif missing_fields:
         print(f"⚠️ Row {idx} missing text value: {', '.join(missing_fields)}")
         print(f"🟡 Row {idx} processed: {os.path.basename(output_pdf_path)}")

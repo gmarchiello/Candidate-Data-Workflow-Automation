@@ -1,7 +1,18 @@
+from pathlib import Path
+
 # --- FILE PATHS ---
 # Define paths for input Excel file and PDF template
-EXCEL_PATH = "/Users/g/Documents/Data_change_portfolio/input/personal_data_change.xlsx"
-PDF_TEMPLATE = "/Users/g/Documents/Data_change_portfolio/input/data_form_editable.pdf"
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+INPUT_DIR = BASE_DIR / "input"
+EXCEL_PATH = INPUT_DIR / "mock_databases" / "Power_Query_Database_mock.xlsx"
+
+PDF_PATH = INPUT_DIR / "data_form_editable.pdf"
+
+OUTPUT_DIR = BASE_DIR / "output"
+OUTPUT_DIR.mkdir(exist_ok=True)
+
+
 
 # --- CONFIGURATION ---
 # Constant values that will be inserted into specific PDF fields
@@ -20,7 +31,7 @@ CHECKBOX_MAP = {
     "chk_gender": "Gender_chk",
     "chk_name": "Name_chk",
     "chk_surname": "Surname_chk",
-    "chk_date_of_birth": "Date_of_Birth_chk",
+    "chk_date_of_birth": "Date_of_birth_chk",
     "chk_place_of_birth": "Place_of_birth_chk",
     "chk_country_of_birth": "Country_of_birth_chk",
     "chk_email": "Email_chk",

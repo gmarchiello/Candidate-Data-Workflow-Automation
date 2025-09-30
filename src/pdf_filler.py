@@ -4,6 +4,9 @@ from pdfrw import PdfReader, PdfWriter, PdfName, PdfObject
 # --- PDF FILLING FUNCTION ---
 # Helper to fill PDF with text values and checkboxes
 def fill_pdf(input_pdf_path, output_pdf_path, text_values, checkboxes_to_check):
+    input_pdf_path = str(input_pdf_path)
+    output_pdf_path = str(output_pdf_path)
+
     """
     Fills a PDF template with provided text values and selected checkboxes.
     Ensures 'NeedAppearances' is set so form fields display correctly.
@@ -28,4 +31,4 @@ def fill_pdf(input_pdf_path, output_pdf_path, text_values, checkboxes_to_check):
                     annot.V = PdfName("Yes")
                     annot.AS = PdfName("Yes")
 
-        PdfWriter().write(output_pdf_path, pdf)
+    PdfWriter().write(output_pdf_path, pdf)

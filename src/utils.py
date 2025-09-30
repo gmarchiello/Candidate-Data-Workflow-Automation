@@ -3,6 +3,8 @@ import re
 import pandas as pd
 from datetime import datetime
 from pytz import timezone
+from pathlib import Path
+
 
 # --- TIMEZONE SETUP ---
 italy_tz = timezone("Europe/Rome")
@@ -23,19 +25,22 @@ def safe_get(value, for_pdf_field=True, placeholder="UNKNOWN"):
 
     return str(value).strip()
 
-# Helper to create output folder with timestamp
+#     Creates a timestamped output folder and returns a Path object.
 def make_output_folder(base_dir):
+    base_dir = Path(base_dir)
     timestamp = datetime.now(italy_tz).strftime("%Y%m%d_%H%M")
-    output_dir = os.path.join(base_dir, f"fulfilled_forms_{timestamp}")
-    os.makedirs(output_dir, exist_ok=True)
+    output_dir = base_dir / f"fulfilled_forms_{timestamp}"
+    output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir
 
 # Helper to create safe filenames
+
 def clean_filename(name, surname, suffix_list):
+    suffix_strs = [str(s) for s in suffix_list] # ensure all suffixes are strings
     safe_name = re.sub(
         r"[^a-zA-Z0-9]",
         "_",
-        f"{surname}_{name}_change_request_" + "_".join(suffix_list),
+        f"{surname}_{name}_change_request_" + "_".join(suffix_strs),
     )
     return safe_name
 
