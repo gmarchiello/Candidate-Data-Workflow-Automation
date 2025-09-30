@@ -102,14 +102,11 @@ OUTPUT_FOLDER = make_output_folder(str(OUTPUT_DIR))  # should return Path
 email_data = []
 
 for idx, row in df.iterrows():
-
-
-    
     # Identify selected checkboxes
     checked_fields = get_checked_fields(row, CHECKBOX_MAP)
     missing_checkbox = not bool(checked_fields)
 
-        # Identify missing text fields
+    # Identify missing text fields
     missing_fields = [
         excel_col for excel_col in TEXT_MAP.values() # only consider mapped columns
         if excel_col is not None and not safe_get(row.get(excel_col)) # check for missing

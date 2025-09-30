@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # --- FILE PATHS ---
-# Define paths for input Excel file and PDF template
+# Define base directory and paths for input/output files
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 INPUT_DIR = BASE_DIR / "input"

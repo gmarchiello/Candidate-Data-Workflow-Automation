@@ -6,7 +6,6 @@ from pdfrw import PdfReader, PdfWriter, PdfName, PdfObject
 def fill_pdf(input_pdf_path, output_pdf_path, text_values, checkboxes_to_check):
     input_pdf_path = str(input_pdf_path)
     output_pdf_path = str(output_pdf_path)
-
     """
     Fills a PDF template with provided text values and selected checkboxes.
     Ensures 'NeedAppearances' is set so form fields display correctly.
