@@ -5,9 +5,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 INPUT_DIR = BASE_DIR / "input"
-EXCEL_PATH = INPUT_DIR / "mock_databases" / "Power_Query_Database_mock.xlsx"
+EXCEL_PATH = INPUT_DIR / "change_request_data" / "candidates_change_request_tool.xlsx"
 
-PDF_PATH = INPUT_DIR / "data_form_editable.pdf"
+PDF_PATH = INPUT_DIR / "templates" / "data_form_editable.pdf"
 
 OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)

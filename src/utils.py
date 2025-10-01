@@ -25,7 +25,7 @@ def safe_get(value, for_pdf_field=True, placeholder="UNKNOWN"):
 
     return str(value).strip()
 
-#     Creates a timestamped output folder and returns a Path object.
+# Creates a timestamped output folder and returns a Path object.
 def make_output_folder(base_dir):
     base_dir = Path(base_dir)
     timestamp = datetime.now(italy_tz).strftime("%Y%m%d_%H%M")
@@ -34,7 +34,6 @@ def make_output_folder(base_dir):
     return output_dir
 
 # Helper to create safe filenames
-
 def clean_filename(name, surname, suffix_list):
     suffix_strs = [str(s) for s in suffix_list] # ensure all suffixes are strings
     safe_name = re.sub(
