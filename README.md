@@ -18,8 +18,7 @@ This project demonstrates a **semi-automated workflow**: it automates the repeti
 You can run the **full workflow** directly in Google Colab — no installation needed.  
 The Colab notebook handles all file setup automatically (downloads templates and Excel from GitHub, zips outputs) so you can simply **run all cells** to see the workflow in action.  
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]
-(https://colab.research.google.com/github/gmarchiello/Candidate-Data-Workflow-Automation/blob/main/colab/Candidate-Data-Workflow-Automation_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gmarchiello/Candidate-Data-Workflow-Automation/blob/main/colab/Candidate-Data-Workflow-Automation_colab.ipynb)
 
 ---
 
