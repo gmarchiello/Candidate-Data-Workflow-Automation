@@ -7,16 +7,16 @@
 ---
 
 ## 🔍 About This Project
-This repository contains a **mockup version** of a tool I originally developed at *Instituto Cervantes* to improve the workflow for updating **DELE candidate data**.
+his repository contains a **mockup version** of a tool I originally developed at *Instituto Cervantes* to streamline candidate data updates.
 
-Previously, updating candidate information required **manually filling PDF forms** and sending them via JIRA to colleagues in Madrid — a process that was **time-consuming, repetitive, and prone to errors**, especially during peak exam periods.
+Previously, updating candidate information required **manually filling PDF forms** and sending them via JIRA — a process that was **time-consuming, repetitive, and prone to errors**, especially during peak exam periods.
 
-To optimize this workflow, I developed an **end-to-end automation pipeline**: it handles everything from **data aggregation to PDF generation and ready-to-send JIRA messages**, reducing manual effort and errors while improving speed and flexibility.
-
+This project demonstrates a **semi-automated workflow**: it automates the repetitive core tasks while allowing **flexible manual handling** for cases where requests arrive via calls, emails, texts, or require special attention.
 ---
 
 ## 🚀 Try It Online
-You can test a **simplified demo version** directly in Google Colab — no installation needed:
+You can run the **full workflow** directly in Google Colab — no installation needed.  
+The Colab notebook handles all file setup automatically (downloads templates and Excel from GitHub, zips outputs) so you can simply **run all cells** to see the workflow in action.  
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gmarchiello/pdf_form_filler/blob/main/pdf_form_filler_colab.ipynb)
 
